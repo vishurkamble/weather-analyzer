@@ -53,15 +53,17 @@ object WeatherAnalyzer {
         weatherRecords.asScala
           .map(weatherRecord => convertToWeatherDataFrom(weatherRecord))
           .groupBy(weatherData => weatherData.location)
-          .foreach(case (location, weatherList) => {
-          val dateSortedWeatherList = weatherList.toSeq.sortBy(weatherData => weatherData.epoch)
-          dateSortedWeatherList
-            .sliding(5,5)
-            .foreach((weatherChunk: Seq[WeatherData]) => {
-              printWheatherAscendingOrDescedning(weatherChunk)
-              println(s"Processed weather chuck containing '$weatherChunk'")
-            })
-        })
+          .foreach {
+            case (location, weatherList) => {
+              val dateSortedWeatherList = weatherList.toSeq.sortBy(weatherData => weatherData.epoch)
+              dateSortedWeatherList
+                .sliding(5,5)
+                .foreach((weatherChunk: Seq[WeatherData]) => {
+                  printWheatherAscendingOrDescedning(weatherChunk)
+                  println(s"Processed weather chuck containing '$weatherChunk'")
+                })
+            }
+          }
         Thread.sleep(5000)
       }
     } catch {
@@ -123,5 +125,4 @@ object WeatherAnalyzer {
       }
     }
   }
-
 }
