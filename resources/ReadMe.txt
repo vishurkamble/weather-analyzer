@@ -27,3 +27,7 @@ scala -classpath producers-0.1.jar weather.analyzer.producers.ReproducibleWeathe
 6) Run kafka console consumer as given below to check data:
 
 ./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic weather --from-beginning --property print.key=true
+
+
+7) Run kafka consumer code to analyze weather data as given below:
+scala -classpath consumers-0.1.jar weather.analyzer.consumers.WeatherAnalyzer SERVERS GROUPID

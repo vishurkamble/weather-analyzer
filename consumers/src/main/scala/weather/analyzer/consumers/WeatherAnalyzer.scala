@@ -16,12 +16,12 @@ import scala.io.StdIn
 case class WeatherData(location: String, epoch: Long, temperature: Int)
 
 object WeatherAnalyzer {
-/*
-* Usage
-* scala -classpath consumers-0.1.jar weather.analyzer.consumers.WeatherAnalyzer SERVERS GROUPID
-* SERVERS is a comma delimited list of servers in the format of [ServerAddress]:[Port] ~ Default = localhost:9092
-* GROUPID is a single string value ~ Default = "weather-consumer"
-*/
+  /*
+  * Usage
+  * scala -classpath consumers-0.1.jar weather.analyzer.consumers.WeatherAnalyzer SERVERS GROUPID
+  * SERVERS is a comma delimited list of servers in the format of [ServerAddress]:[Port] ~ Default = localhost:9092
+  * GROUPID is a single string value ~ Default = "weather-consumer"
+  */
   def main(args:Array[String]): Unit = {
     val props = new Properties()
     props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,args.lift(0).getOrElse("localhost:9092"))
@@ -33,7 +33,6 @@ object WeatherAnalyzer {
     try {
       setupShutdown(consumer)
       val topic = "weather"
-
       consumer.subscribe(Seq(topic).asJava, //OR java.util.regex.Pattern
         new ConsumerRebalanceListener {
           override def onPartitionsRevoked(partitions: util.Collection[TopicPartition]): Unit = {
@@ -57,13 +56,14 @@ object WeatherAnalyzer {
             case (location, weatherList) => {
               val dateSortedWeatherList = weatherList.toSeq.sortBy(weatherData => weatherData.epoch)
               dateSortedWeatherList
-                .sliding(5,5)
+                .sliding(5, 5)
                 .foreach((weatherChunk: Seq[WeatherData]) => {
                   printWheatherAscendingOrDescedning(weatherChunk)
                   println(s"Processed weather chuck containing '$weatherChunk'")
                 })
             }
           }
+        println("Here....3")
         Thread.sleep(5000)
       }
     } catch {
@@ -101,6 +101,7 @@ object WeatherAnalyzer {
   private def convertToWeatherDataFrom(weatherRecord: ConsumerRecord[String, String]) ={
     val weatherValues = weatherRecord.value.split(',')
     val location = weatherRecord.key.split('_')(1)
+    println("Here....2")
     WeatherData(location,epoch = weatherValues(0).toLong,temperature = weatherValues(1).toInt)
   }
 

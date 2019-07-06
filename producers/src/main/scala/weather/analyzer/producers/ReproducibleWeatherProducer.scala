@@ -1,4 +1,4 @@
-package weather.analyzer.consumers
+package weather.analyzer.producers
 
 import java.time._
 import java.util.Properties
