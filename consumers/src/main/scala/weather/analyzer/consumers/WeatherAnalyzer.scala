@@ -63,7 +63,7 @@ object WeatherAnalyzer {
                 })
             }
           }
-        println("Here....3")
+        //println("Here....3")
         Thread.sleep(5000)
       }
     } catch {
@@ -101,7 +101,7 @@ object WeatherAnalyzer {
   private def convertToWeatherDataFrom(weatherRecord: ConsumerRecord[String, String]) ={
     val weatherValues = weatherRecord.value.split(',')
     val location = weatherRecord.key.split('_')(1)
-    println("Here....2")
+    //println("Here....2")
     WeatherData(location,epoch = weatherValues(0).toLong,temperature = weatherValues(1).toInt)
   }
 
