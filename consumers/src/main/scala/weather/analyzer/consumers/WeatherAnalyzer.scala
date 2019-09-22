@@ -59,7 +59,7 @@ object WeatherAnalyzer {
                 .sliding(5, 5)
                 .foreach((weatherChunk: Seq[WeatherData]) => {
                   printWheatherAscendingOrDescedning(weatherChunk)
-                  println(s"Processed weather chuck containing '$weatherChunk'")
+                  //println(s"Processed weather chuck containing '$weatherChunk'")
                 })
             }
           }
